@@ -1,2 +1,2 @@
 # Fernandez Heredia. Primer Parcial LABI parte 2.
- Realizado en Eclipse
+ Realizado en IDE Eclipse
