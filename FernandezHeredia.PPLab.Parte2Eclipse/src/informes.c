@@ -43,7 +43,7 @@ void informar(eNotebook listaN[],int tamN, eMarca listaM[], int tamM, eTrabajo l
 				informarNotebooksPorTipo(listaN, tamN, tipos, tamTipos, listaM, tamM);
 				break;
 			case 'b':
-				informarNotebooksPorMarca(listaN, tamN, listaM, tamM, listaM, tamM);
+				informarNotebooksPorMarca(listaN, tamN, tipos, tamTipos, listaM, tamM);
 				break;
 			case 'c':
 				informarNotebookMasBarata(listaN, tamN, tipos, tamTipos, listaM, tamM);
@@ -69,6 +69,9 @@ void informar(eNotebook listaN[],int tamN, eMarca listaM[], int tamM, eTrabajo l
 				informarNotebooksPorServicio(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
 				break;
 			case 'j':
+				serviciosPorFecha(listaT, tamT, listaS, tamS);
+				break;
+			case 'k':
 				printf("Confirma salida? s/n: ");
 				fpurge(stdin);
 				scanf("%c", &confirmar);
@@ -104,7 +107,8 @@ char menuInformes()
 	printf("g. Trabajos por notebook.\n");
 	printf("h. Total Servicios por Notebook.\n");
 	printf("i. Informar notebook por servicio.\n");
-	printf("j. Salir\n\n");
+	printf("j. Informar servicios por fecha.\n");
+	printf("k. Salir\n\n");
 	printf("Ingrese la opcion elegida: ");
 	fpurge(stdin);
 	scanf("%c", &opcion);
@@ -482,3 +486,39 @@ void informarNotebooksPorServicio(eNotebook listaN[], int tamN, eTipo tipos[], i
 	}
 
 }
+
+//Pedir una fecha y mostrar todos los servicios realizados en la misma.
+void serviciosPorFecha(eTrabajo listaT[], int tamT, eServicio listaS[], int tamS)
+{
+	int dia;
+	int mes;
+	int anio;
+	int indiceS;
+	int flag = 0;
+
+	utn_getEntero(&dia, 3, "Ingrese dia del 1 al 31: ", "Incorrecto.\n", 1, 31);
+	utn_getEntero(&mes, 3, "Ingrese mes del 1 al 12: ", "Incorrecto.\n", 1, 12);
+	utn_getEntero(&anio, 3, "Ingrese anio del 1990 al 2020: ", "Incorrecto.\n", 1990, 2020);
+
+	//printf("Los trabajos realizados en ese fecha son: \n");
+	//printf("ID   ID notebook     Servicio     Precio       Fecha\n\n");
+	printf("Los servicios realizados en esa fecha son:\n");
+	printf("  ID     Descripcion   Precio\n\n");
+	for(int t = 0; t < tamT; t++)
+	{
+		if(listaT[t].isEmpty == 0 && listaT[t].fecha.dia == dia && listaT[t].fecha.mes == mes && listaT[t].fecha.anio == anio)
+		{
+			//mostrarTrabajo(listaT[t], listaS, tamS);
+			indiceS = buscarServicioPorId(listaT[t].idServicio, listaS, tamS);
+			mostrarServicio(listaS[indiceS]);
+			flag = 1;
+
+		}
+	}
+	if(flag == 0)
+	{
+		printf("No hay servicios para esta fecha");
+	}
+
+}
+

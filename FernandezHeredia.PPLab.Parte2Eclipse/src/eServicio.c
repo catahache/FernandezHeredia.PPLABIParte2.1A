@@ -47,6 +47,11 @@ int mostrarServicios(eServicio servicios[], int tamS)
 	return isOk;
 }
 
+void mostrarServicio(eServicio servicio)
+{
+	printf("%d   %10s   %.2f\n", servicio.id, servicio.descripcion, servicio.precio);
+}
+
 
 int buscarServicioPorId(int id, eServicio listaS[], int tamS)
 {

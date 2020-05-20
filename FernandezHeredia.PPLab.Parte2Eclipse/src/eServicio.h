@@ -19,6 +19,7 @@ typedef struct{
 int cargarDescripServicio(char descripcion[], int idS, eServicio servicios[], int tamS);
 int mostrarServicios(eServicio servicios[], int tamS);
 int buscarServicioPorId(int id, eServicio listaS[], int tamS);
+void mostrarServicio(eServicio servicio);
 
 
 #endif /* ESERVICIO_H_ */

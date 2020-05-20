@@ -33,7 +33,7 @@ int inicializarMME(eMarcaMasElegida listaMME[], int tamMME);
 void cantidadTrabajosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS);
 void sumaDeServiciosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS);
 void informarNotebooksPorServicio(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS);
-
+void serviciosPorFecha(eTrabajo listaT[], int tamT, eServicio listaS[], int tamS);
 
 
 
