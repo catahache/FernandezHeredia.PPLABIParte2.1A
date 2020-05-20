@@ -66,6 +66,9 @@ void informar(eNotebook listaN[],int tamN, eMarca listaM[], int tamM, eTrabajo l
 				sumaDeServiciosPorNotebook(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
 				break;
 			case 'i':
+				informarNotebooksPorServicio(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
+				break;
+			case 'j':
 				printf("Confirma salida? s/n: ");
 				fpurge(stdin);
 				scanf("%c", &confirmar);
@@ -100,7 +103,8 @@ char menuInformes()
 	printf("f. Mostrar la o las marcas más elegidas por los clientes.\n");
 	printf("g. Trabajos por notebook.\n");
 	printf("h. Total Servicios por Notebook.\n");
-	printf("i. Salir\n\n");
+	printf("i. Informar notebook por servicio.\n");
+	printf("j. Salir\n\n");
 	printf("Ingrese la opcion elegida: ");
 	fpurge(stdin);
 	scanf("%c", &opcion);
@@ -446,3 +450,35 @@ void sumaDeServiciosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int
 
 }
 
+//Pedir un servicio y mostrar las notebooks a las que se realizó ese servicio y la fecha.
+void informarNotebooksPorServicio(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS)
+{
+	int idS;
+	int indiceS;
+	int indiceN;
+	int flag = 0;
+
+	system("clear");
+	printf("***** Informe Servicios Realizados Por Notebook *****\n\n");
+
+	mostrarServicios(listaS, tamS);
+	utn_getEntero(&idS, 3, "Ingresar el id del servicio elegido: ", "Error, id inexistente\n\n", 20000, 20003);
+	indiceS = buscarServicioPorId(idS, listaS, tamS);
+
+	for(int t = 0; t < tamT; t++)
+	{
+		if(listaT[t].isEmpty == 0 && listaT[t].idServicio == idS)
+		{
+			printf("Fecha de realizacion del servicio: %d/%d/%d. Notebook:\n\n", listaT[t].fecha.dia, listaT[t].fecha.mes, listaT[t].fecha.anio);
+			printf("ID           Modelo          Marca          Tipo        Precio\n\n");
+			indiceN = buscarNotebookPorId(listaT[t].idNotebook, listaN, tamN);
+			mostrarNotebook(listaN[indiceN], tipos, tamTipos, listaM, tamM);
+			flag = 1;
+		}
+	}
+	if(flag == 0)
+	{
+		printf("El servicio no se ha realizado a ninguna notebook.\n");
+	}
+
+}
