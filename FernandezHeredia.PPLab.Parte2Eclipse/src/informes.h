@@ -30,6 +30,8 @@ void informarTodasNotebooksMarca(eNotebook listaN[], int tamN, eTipo tipos[], in
 void informarNporTipoyMarca(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM);
 void informarMarcaMasElegida(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eMarcaMasElegida listaMME[]);
 int inicializarMME(eMarcaMasElegida listaMME[], int tamMME);
+void cantidadTrabajosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS);
+
 
 
 

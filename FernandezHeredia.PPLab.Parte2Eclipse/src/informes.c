@@ -60,6 +60,9 @@ void informar(eNotebook listaN[],int tamN, eMarca listaM[], int tamM, eTrabajo l
 				informarMarcaMasElegida(listaN, tamN, tipos, tamTipos, listaM, tamM, listaMME);
 				break;
 			case 'g':
+				cantidadTrabajosPorNotebook(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
+				break;
+			case 'h':
 				printf("Confirma salida? s/n: ");
 				fpurge(stdin);
 				scanf("%c", &confirmar);
@@ -86,13 +89,14 @@ char menuInformes()
 	system("clear");
 
 	printf("***** Menu de informes *****\n\n");
-	printf("a. Mostrar las notebooks del tipo seleccionado por el usuario.\n");
+	printf("a. Mostrar las notebooks del tipo seleccionado.\n");
 	printf("b. Mostrar notebooks de una marca seleccionada.\n");
 	printf("c. Informar la o las notebooks más baratas.\n");
 	printf("d. Mostrar un listado de las notebooks separadas por marca.\n");
-	printf("e. Elegir un tipo y una marca y contar cuantas notebooks hay de ese tipo y esa marca.\n");
+	printf("e. Cuantas notebooks hay de un tipo y una marca.\n");
 	printf("f. Mostrar la o las marcas más elegidas por los clientes.\n");
-	printf("g. Salir\n\n");
+	printf("g. Trabajos por notebook.\n");
+	printf("h. Salir\n\n");
 	printf("Ingrese la opcion elegida: ");
 	fpurge(stdin);
 	scanf("%c", &opcion);
@@ -348,6 +352,48 @@ int inicializarMME(eMarcaMasElegida listaMME[], int tamMME) //el tamanio de la l
 		isOk = 0;
 	}
 	return isOk;
+
+}
+
+void cantidadTrabajosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS)
+{
+	int idN;
+	int indiceN;
+	int flag = 0;
+
+	system("clear");
+	printf("***** Informe Cantidad de Trabajos Por Notebook *****\n\n");
+
+	mostrarNotebooks(listaN, tamN, tipos, tamTipos, listaM, tamM);
+	utn_getEntero(&idN, 3, "Ingresar el id de la notebook elegida: ", "Error, id inexistente\n\n", 1000, 1020); //el sistema acepta solo 20 notebooks
+	indiceN = buscarNotebookPorId(idN, listaN, tamN);
+
+	if(indiceN < 0)
+	{
+		printf("La notebook no existe en sistema.\n\n");
+	}
+	else
+	{
+		printf("La notebook elegida es: \n");
+		printf("ID           Modelo          Marca          Tipo        Precio\n\n");
+		mostrarNotebook(listaN[indiceN], tipos, tamTipos, listaM, tamM);
+		printf("Los trabajos que se le realizaron son: \n\n");
+		printf("ID   ID notebook     Servicio     Precio       Fecha\n\n");
+		for(int t = 0; t < tamT; t++) //recorro trabajos
+		{
+			if(listaT[t].idNotebook == idN)
+			{
+				mostrarTrabajo(listaT[t], listaS, tamS);
+				flag = 1;
+			}
+
+		}
+		if(flag == 0)
+		{
+			printf("La notebook no tiene trabajos a listar");
+		}
+	}//else
+
 
 }
 
