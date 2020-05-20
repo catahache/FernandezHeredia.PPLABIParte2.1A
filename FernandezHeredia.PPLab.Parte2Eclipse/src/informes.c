@@ -63,6 +63,9 @@ void informar(eNotebook listaN[],int tamN, eMarca listaM[], int tamM, eTrabajo l
 				cantidadTrabajosPorNotebook(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
 				break;
 			case 'h':
+				sumaDeServiciosPorNotebook(listaN, tamN, tipos, tamTipos, listaM, tamM, listaT, tamT, listaS, tamS);
+				break;
+			case 'i':
 				printf("Confirma salida? s/n: ");
 				fpurge(stdin);
 				scanf("%c", &confirmar);
@@ -96,7 +99,8 @@ char menuInformes()
 	printf("e. Cuantas notebooks hay de un tipo y una marca.\n");
 	printf("f. Mostrar la o las marcas más elegidas por los clientes.\n");
 	printf("g. Trabajos por notebook.\n");
-	printf("h. Salir\n\n");
+	printf("h. Total Servicios por Notebook.\n");
+	printf("i. Salir\n\n");
 	printf("Ingrese la opcion elegida: ");
 	fpurge(stdin);
 	scanf("%c", &opcion);
@@ -393,7 +397,52 @@ void cantidadTrabajosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], in
 			printf("La notebook no tiene trabajos a listar");
 		}
 	}//else
+}
 
+void sumaDeServiciosPorNotebook(eNotebook listaN[], int tamN, eTipo tipos[], int tamTipos, eMarca listaM[], int tamM, eTrabajo listaT[], int tamT, eServicio listaS[], int tamS)
+{
+	int idN;
+	int indiceN;
+	int idServicio;
+	int indiceServicio;
+	float totalServicios = 0;
+
+	system("clear");
+	printf("***** Informe Total de Servicios Por Notebook *****\n\n");
+
+	mostrarNotebooks(listaN, tamN, tipos, tamTipos, listaM, tamM);
+	utn_getEntero(&idN, 3, "Ingresar el id de la notebook elegida: ", "Error, id inexistente\n\n", 1000, 1020);
+	indiceN = buscarNotebookPorId(idN, listaN, tamN);
+
+	if(indiceN < 0)
+	{
+		printf("La notebook no existe en sistema.\n\n");
+	}
+	else
+	{
+		printf("La notebook elegida es: \n");
+		printf("ID           Modelo          Marca          Tipo        Precio\n\n");
+		mostrarNotebook(listaN[indiceN], tipos, tamTipos, listaM, tamM);
+		for(int t = 0; t < tamT; t++)//recorro trabajos
+		{
+			if(listaN[indiceN].id == listaT[t].idNotebook && listaT[t].isEmpty == 0)
+			{
+				idServicio = listaT[t].idServicio;
+				indiceServicio = buscarServicioPorId(idServicio, listaS, tamS);
+				totalServicios += listaS[indiceServicio].precio;
+			}
+
+		}
+
+		if(totalServicios == 0)
+		{
+			printf("Esta notebook no tiene trabajos realizados.\n");
+		}
+		else
+		{
+			printf("El total de los servicios realizados a esta notebook es de %.2f\n\n", totalServicios);
+		}
+	}//else
 
 }
 
